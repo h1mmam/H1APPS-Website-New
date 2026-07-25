@@ -22,6 +22,20 @@ const ui = {
   },
 };
 
+function setupLanguageNavigation() {
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  const productLink = nav.querySelector('a[href="products.html"]');
+  if (productLink) productLink.textContent = lang === 'en' ? 'Products' : 'منتجاتنا';
+  const switcher = document.createElement('div');
+  switcher.className = 'language-switch';
+  switcher.innerHTML = `<button type="button" class="${lang === 'ar' ? 'active' : ''}">عربي</button><button type="button" class="${lang === 'en' ? 'active' : ''}">EN</button>`;
+  const buttons = switcher.querySelectorAll('button');
+  buttons[0].onclick = () => { localStorage.setItem('h1apps-language', 'ar'); location.reload(); };
+  buttons[1].onclick = () => { localStorage.setItem('h1apps-language', 'en'); location.reload(); };
+  nav.append(switcher);
+}
+
 function esc(value) {
   return String(value || '').replace(/[&<>"']/g, c => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
@@ -37,7 +51,18 @@ function productField(product, key) {
 }
 
 function link(value) {
-  return esc(value).replace(/ /g, '%20');
+  try {
+    const url = new URL(String(value || ''), window.location.href);
+    if (!['http:', 'https:', 'mailto:', 'tel:'].includes(url.protocol)) return '';
+    return esc(url.href);
+  } catch (_) { return ''; }
+}
+
+function imageLink(value) {
+  try {
+    const url = new URL(String(value || ''), window.location.href);
+    return ['http:', 'https:'].includes(url.protocol) ? esc(url.href) : '';
+  } catch (_) { return ''; }
 }
 
 function metaRows(f) {
@@ -68,7 +93,8 @@ function section(id, title, value) {
 function brand(f, product, kicker, fallback) {
   const name = field(f, 'appName') || product?.title || 'H1APPS';
   const image = product?.imageUrl || '';
-  return `<div class="context-brand">${image ? `<img src="${link(image)}" alt="${esc(name)}" loading="eager">` : ''}<div><span class="context-kicker">${esc(kicker)}</span><h1>${esc(name)}</h1><p>${esc(field(f, 'subtitle') || fallback)}</p></div></div>`;
+  const imageUrl = imageLink(image);
+  return `<div class="context-brand">${imageUrl ? `<img src="${imageUrl}" alt="${esc(name)}" loading="eager">` : ''}<div><span class="context-kicker">${esc(kicker)}</span><h1>${esc(name)}</h1><p>${esc(field(f, 'subtitle') || fallback)}</p></div></div>`;
 }
 
 function renderTerms(page, product) {
@@ -112,7 +138,7 @@ function renderDownload(page, product) {
   const links = [
     ['appleStoreUrl', 'App Store', ''], ['googlePlayUrl', 'Google Play', '▶'],
     ['huaweiStoreUrl', 'AppGallery', '▣'], ['directDownloadUrl', ui[lang].direct, '↓'],
-  ].map(([key, title, icon]) => [productField(product, key), title, icon]).filter(([url]) => url);
+  ].map(([key, title, icon]) => [link(productField(product, key)), title, icon]).filter(([url]) => url);
   const storeCards = links.map(([url, title, icon]) => `<a class="context-store" href="${link(url)}" target="_blank" rel="noopener noreferrer"><b>${icon}</b><span>${title}<small>${ui[lang].openStore} ↗</small></span></a>`).join('');
   const email = field(f, 'supportEmail');
   const description = field(f, 'description') || productField(product, 'fullDescription');
@@ -134,16 +160,18 @@ function render(page, product) {
   let content;
   if (page.template === 'terms') content = renderTerms(page, product);
   else if (page.template === 'download') content = renderDownload(page, product);
-  else content = `<article class="custom-page container"><a class="back-link" href="product.html?id=${link(productId)}">← ${ui[lang].back}</a><span class="section-kicker">H1APPS</span><h1>${esc(lang === 'en' ? (page.titleEn || page.title) : page.title)}</h1><div class="custom-page-content">${esc(lang === 'en' ? (page.contentEn || page.content) : page.content).replace(/\n/g, '<br>')}</div></article>`;
+  else content = `<article class="custom-page container"><a class="back-link" href="product.html?id=${encodeURIComponent(productId)}">← ${ui[lang].back}</a><span class="section-kicker">H1APPS</span><h1>${esc(lang === 'en' ? (page.titleEn || page.title) : page.title)}</h1><div class="custom-page-content">${esc(lang === 'en' ? (page.contentEn || page.content) : page.content).replace(/\n/g, '<br>')}</div></article>`;
   document.getElementById('pageRoot').innerHTML = content;
   window.h1appsDataReady?.();
-  document.title = `${esc(lang === 'en' ? (page.titleEn || page.title) : page.title)} | H1APPS`;
+  document.title = `${lang === 'en' ? (page.titleEn || page.title) : page.title} | H1APPS`;
   document.querySelectorAll('.legal-tabs button').forEach(button => button.onclick = () => {
     document.querySelectorAll('.legal-tabs button,.legal-panel').forEach(el => el.classList.remove('active'));
     button.classList.add('active');
     document.getElementById(button.dataset.panel).classList.add('active');
   });
 }
+
+setupLanguageNavigation();
 
 try {
   firebase.initializeApp({ apiKey: 'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU', authDomain: 'h1words.firebaseapp.com', projectId: 'h1words', storageBucket: 'h1words.firebasestorage.app', messagingSenderId: '594662600507', appId: '1:594662600507:web:h1appswebsite' });

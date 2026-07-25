@@ -1,4 +1,6 @@
 let lang = localStorage.getItem('h1apps-language') || 'en';
+const esc = (value) => String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+const safeImage = (value) => { try { const url = new URL(String(value || ''), window.location.href); return ['http:', 'https:'].includes(url.protocol) ? url.href : ''; } catch (_) { return ''; } };
 document.body.classList.add('data-pending');
 document.querySelector('main')?.classList.add('site-data-empty');
 
@@ -56,6 +58,13 @@ function shorten(value) {
   return text.length > 120 ? `${text.slice(0, 117).trim()}…` : text;
 }
 
+function showLoadError() {
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  const message = lang === 'ar' ? 'تعذر تحميل المنتجات الآن. حاول تحديث الصفحة.' : 'Products could not be loaded right now. Please refresh and try again.';
+  grid.innerHTML = `<div class="products-empty products-error" role="alert"><p>${esc(message)}</p><button type="button" onclick="location.reload()">${lang === 'ar' ? 'إعادة المحاولة' : 'Try again'}</button></div>`;
+}
+
 function setLanguage(next) {
   lang = next;
   localStorage.setItem('h1apps-language', lang);
@@ -92,16 +101,17 @@ function render(apps) {
     const slug = encodeURIComponent(app.slug || app.id);
     const tags = tagsFor(app);
     const featured = index === 0;
-    return `<a class="project-card ${featured ? 'project-card--featured' : 'project-card--standard'} ${accentClass(app)}" data-project="${projectKey(app)}" style="${artStyle(app)}" href="product.html?slug=${slug}" aria-label="${title || ''}">
+    const imageUrl = safeImage(app.imageUrl);
+    return `<a class="project-card ${featured ? 'project-card--featured' : 'project-card--standard'} ${accentClass(app)}" data-project="${esc(projectKey(app))}" style="${artStyle(app)}" href="product.html?slug=${slug}" aria-label="${esc(title)}">
       <div class="project-card__visual">
         <div class="project-card__visual-bg" aria-hidden="true"></div>
-        <div class="project-card__artwork">${app.imageUrl ? `<img src="${app.imageUrl}" alt="${title || ''}" loading="lazy" decoding="async" width="720" height="480">` : ''}</div>
+        <div class="project-card__artwork">${imageUrl ? `<img src="${esc(imageUrl)}" alt="${esc(title)}" loading="lazy" decoding="async" width="720" height="480">` : ''}</div>
       </div>
       <div class="project-card__content">
-        <div class="project-card__meta"><span class="project-card__category">${app.category || app.type || ''}</span></div>
-        <h2 class="project-card__title">${title || ''}</h2>
-        <p class="project-card__description">${shorten(description)}</p>
-        <div class="project-card__tags">${tags.map((tag) => `<span class="project-card__tag">${tag}</span>`).join('')}</div>
+        <div class="project-card__meta"><span class="project-card__category">${esc(app.category || app.type || '')}</span></div>
+        <h2 class="project-card__title">${esc(title)}</h2>
+        <p class="project-card__description">${esc(shorten(description))}</p>
+        <div class="project-card__tags">${tags.map((tag) => `<span class="project-card__tag">${esc(tag)}</span>`).join('')}</div>
         <div class="project-card__footer"><span class="project-card__explore">${featured ? labels[lang].explore : ''}</span><span class="project-card__arrow" aria-hidden="true">↗</span></div>
       </div>
     </a>`;
@@ -168,7 +178,7 @@ try {
     window.apps = products.docs.map((doc) => ({ id: doc.id, ...doc.data() })).filter((app) => app.published === true).sort((a, b) => (a.order || 0) - (b.order || 0));
     if (window.homeData) renderHeader(window.homeData);
     render(window.apps);
-  }).catch(() => document.getElementById('productsGrid')?.replaceChildren());
+  }).catch((error) => { console.error('Products data load failed', error); showLoadError(); });
 } catch (error) {
-  document.getElementById('productsGrid')?.replaceChildren();
+  console.error('Products Firebase initialization failed', error); showLoadError();
 }

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#061126">
+  <title>Page not found | H1APPS</title>
+  <link rel="icon" type="image/png" href="brand/h1apps.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .not-found{min-height:70vh;display:grid;place-items:center;text-align:center;padding:40px 16px}.not-found-card{max-width:620px;padding:48px 28px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(13,39,76,.8),rgba(6,18,39,.95));box-shadow:0 28px 80px rgba(0,0,0,.25)}.not-found-code{color:var(--cyan);font:800 12px Manrope,sans-serif;letter-spacing:.2em}.not-found h1{font-size:clamp(42px,8vw,76px);margin:16px 0}.not-found p{color:var(--muted);line-height:1.9}.not-found a{display:inline-flex;margin-top:22px;padding:13px 20px;border:1px solid rgba(64,180,255,.55);border-radius:14px;color:#fff;background:linear-gradient(120deg,#13a7f6,#1768e9)}
+  </style>
+</head>
+<body>
+  <nav class="site-nav container"><a class="brand" href="index.html"><span class="brand-mark"><img src="brand/h1apps.png" alt="H1APPS"></span><span><strong>H1APPS</strong><small>Ideas that turn into impact</small></span></a><div class="language-switch"><button id="arButton" type="button">عربي</button><button id="enButton" class="active" type="button">EN</button></div></nav>
+  <main class="not-found"><section class="not-found-card"><span class="not-found-code">404 / NOT FOUND</span><h1 id="title">This page moved.</h1><p id="description">The page you are looking for is not available or the link is no longer valid.</p><a id="home" href="index.html">Back to H1APPS ↗</a></section></main>
+  <script>
+    const language = localStorage.getItem('h1apps-language') || 'en';
+    const ar = language === 'ar'; document.documentElement.lang = language; document.documentElement.dir = ar ? 'rtl' : 'ltr';
+    const title = document.getElementById('title'), description = document.getElementById('description'), home = document.getElementById('home');
+    if (ar) { title.textContent = 'الصفحة غير موجودة'; description.textContent = 'الرابط الذي فتحته غير متاح أو لم يعد صالحًا.'; home.textContent = 'العودة إلى H1APPS ↗'; }
+    document.getElementById('arButton').onclick = () => { localStorage.setItem('h1apps-language', 'ar'); location.reload(); }; document.getElementById('enButton').onclick = () => { localStorage.setItem('h1apps-language', 'en'); location.reload(); };
+  </script>
+</body>
+</html>
