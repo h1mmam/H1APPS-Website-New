@@ -174,7 +174,7 @@ function render(page, product) {
 setupLanguageNavigation();
 
 try {
-  firebase.initializeApp({ apiKey: 'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU', authDomain: 'h1words.firebaseapp.com', projectId: 'h1words', storageBucket: 'h1words.firebasestorage.app', messagingSenderId: '594662600507', appId: '1:594662600507:web:h1appswebsite' });
+  firebase.initializeApp({ apiKey: 'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU', authDomain: 'h1words.firebaseapp.com', projectId: 'h1words', storageBucket: 'h1words.firebasestorage.app', messagingSenderId: '594662600507', appId: '1:594662600507:web:2fcbf66623066c7bc8d11e' });
   Promise.all([
     firebase.firestore().collection('site_products').doc(productId).collection('pages').doc(pageId).get(),
     firebase.firestore().collection('site_products').doc(productId).get(),

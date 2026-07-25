@@ -9,14 +9,7 @@
     page_title: document.title,
   });
 
-  const firebaseConfig = {
-    apiKey: 'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU',
-    authDomain: 'h1words.firebaseapp.com',
-    projectId: 'h1words',
-    storageBucket: 'h1words.firebasestorage.app',
-    messagingSenderId: '594662600507',
-    appId: '1:594662600507:web:2fcbf66623066c7bc8d11e',
-  };
+  const firebaseConfig = { apiKey: 'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU', authDomain: 'h1words.firebaseapp.com', projectId: 'h1words', storageBucket: 'h1words.firebasestorage.app', messagingSenderId: '594662600507', appId: '1:594662600507:web:2fcbf66623066c7bc8d11e' };
   const sessionKey = 'h1apps-analytics-session';
   const sessionId = window.localStorage.getItem(sessionKey) || (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
   window.localStorage.setItem(sessionKey, sessionId);

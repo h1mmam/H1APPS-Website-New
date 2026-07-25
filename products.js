@@ -4,14 +4,7 @@ const safeImage = (value) => { try { const url = new URL(String(value || ''), wi
 document.body.classList.add('data-pending');
 document.querySelector('main')?.classList.add('site-data-empty');
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU',
-  authDomain: 'h1words.firebaseapp.com',
-  projectId: 'h1words',
-  storageBucket: 'h1words.firebasestorage.app',
-  messagingSenderId: '594662600507',
-  appId: '1:594662600507:web:h1appswebsite',
-};
+const firebaseConfig = { apiKey: 'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU', authDomain: 'h1words.firebaseapp.com', projectId: 'h1words', storageBucket: 'h1words.firebasestorage.app', messagingSenderId: '594662600507', appId: '1:594662600507:web:2fcbf66623066c7bc8d11e' };
 
 const labels = {
   ar: { about: 'من نحن', products: 'منتجاتنا', contact: 'تواصل معنا', direction: 'rtl', explore: 'استكشف المشروع' },

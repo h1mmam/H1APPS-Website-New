@@ -1,6 +1,6 @@
 let language=localStorage.getItem('h1apps-language')||'en';
 const contactForm=document.getElementById('contactForm'); if(contactForm){const trap=document.createElement('input');trap.className='form-trap';trap.name='website';trap.tabIndex=-1;trap.autocomplete='off';trap.setAttribute('aria-hidden','true');contactForm.prepend(trap)}
-const firebaseConfig={apiKey:'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU',authDomain:'h1words.firebaseapp.com',projectId:'h1words',storageBucket:'h1words.firebasestorage.app',messagingSenderId:'594662600507',appId:'1:594662600507:web:h1appswebsite'};
+const firebaseConfig={apiKey:'AIzaSyDOlDg14fbH8kXfSbr6YCj6NECtEPJIdiU',authDomain:'h1words.firebaseapp.com',projectId:'h1words',storageBucket:'h1words.firebasestorage.app',messagingSenderId:'594662600507',appId:'1:594662600507:web:2fcbf66623066c7bc8d11e'};
 const fields=['contactKicker','contactTitle','contactDescription','formKicker','formTitle','formDescription','emailLabel','whatsappLabel','addressLabel','nameLabel','emailFieldLabel','phoneLabel','companyLabel','messageLabel','consentLabel','submitText','footerText','footerDeletion'];
 const text=(data,key)=>language==='en'?data[`${key}En`]:data[key];
 const safeHref=(value)=>{try{const url=new URL(String(value||''),window.location.href);return ['http:','https:','mailto:','tel:'].includes(url.protocol)?url.href:''}catch(_){return ''}};
