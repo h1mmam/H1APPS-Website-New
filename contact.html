@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#061126"><meta name="description" content="">
+  <meta property="og:title" content=""><meta property="og:description" content="">
+  <meta property="og:image" content="brand/h1apps.png"><title></title>
+  <link rel="icon" href="brand/h1apps.png"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="contact.css"><link rel="stylesheet" href="strict-data.css">
+</head>
+<body class="contact-page data-pending">
+  <nav class="site-nav container" aria-label="Main navigation">
+    <a class="brand" href="index.html"><span class="brand-mark"><img src="brand/h1apps-logo.jpg" alt="H1APPS"></span><span><strong>H1APPS</strong><small data-ar="نبني أفكارًا تتحول إلى أثر">Ideas that turn into impact</small></span></a>
+    <div class="nav-links"><a href="about.html" data-ar="من نحن">About us</a><a href="products.html" data-ar="منتجاتنا">Our work</a><a class="active" href="contact.html" data-ar="تواصل معنا">Contact</a></div>
+    <div class="language-switch" aria-label="Language"><span class="language-thumb"></span><button id="arButton" type="button">عربي</button><button id="enButton" class="active" type="button">EN</button></div>
+    <a class="nav-action" href="project-request.html" data-ar="ابدأ مشروعك">Start a project <span>↗</span></a>
+  </nav>
+  <main class="contact-shell container site-data-empty">
+    <section class="contact-intro"><span class="contact-kicker" id="contactKicker">LET’S TALK</span><h1 id="contactTitle">Have an idea? Let’s make it clear.</h1><p id="contactDescription">Tell us what you are building, what is getting in the way, and where you want to go next.</p><div class="contact-links"><a id="contactEmail" href="mailto:hello@h1apps.com"><span class="contact-link-icon">@</span><span><small id="emailLabel">Email us</small><strong>hello@h1apps.com</strong></span><b>↗</b></a><a id="contactWhatsapp" href="#" target="_blank" rel="noopener"><span class="contact-link-icon">◌</span><span><small id="whatsappLabel">WhatsApp</small><strong id="phoneText">Message our team</strong></span><b>↗</b></a><div class="contact-detail"><span class="contact-link-icon">⌖</span><span><small id="addressLabel">Based in</small><strong id="addressText">Palestine · Working worldwide</strong></span></div></div></section>
+    <section class="contact-card"><div class="contact-card-head"><div><span class="contact-kicker" id="formKicker">CONTACT FORM</span><h2 id="formTitle">Start a conversation</h2><p id="formDescription">We usually reply within one business day.</p></div><span class="contact-mark">H1</span></div>
+      <form id="contactForm" novalidate><div class="contact-form-grid"><label><span id="nameLabel">Your name</span><input name="name" required autocomplete="name" placeholder="Your name"></label><label><span id="emailFieldLabel">Email address</span><input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></label><label><span id="phoneLabel">Phone / WhatsApp</span><input name="phone" autocomplete="tel" placeholder="+970 ..."></label><label><span id="companyLabel">Company (optional)</span><input name="company" placeholder="Company name"></label></div><label class="contact-wide"><span id="messageLabel">How can we help?</span><textarea name="message" required rows="6" placeholder="Tell us a little about your idea..."></textarea></label><label class="contact-consent"><input name="consent" type="checkbox" required><span id="consentLabel">I agree to be contacted about this message.</span></label><div class="contact-form-footer"><p id="formMessage" role="status"></p><button class="button button-primary" id="submitButton" type="submit"><span id="submitText">Send message</span><b>↗</b></button></div></form>
+    </section>
+  </main>
+  <footer class="footer container"><a class="brand" href="index.html"><span class="brand-mark"><img src="brand/h1apps-logo.jpg" alt=""></span><span><strong>H1APPS</strong><small id="footerText">Digital products with a human touch.</small></span></a><span>© <span id="year"></span> H1APPS</span><a href="account-deletion.html" id="footerDeletion">Delete account</a></footer>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script><script src="contact.js"></script><script src="motion.js"></script>
+</body></html>
